@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Filter Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="">
+    <!-- Add 'dark-mode' class here dynamically -->
+    <div class="container">
+        <header>
+            <h1>Image Filter Pro</h1>
+            <button id="darkModeToggle" class="theme-toggle-btn glassmorphism-light">🌙 Dark Mode</button>
+        </header>
+
+        <div class="main-content">
+
+            <!-- Image & Controls Section -->
+            <div id="imageSection" class="image-section glassmorphism">
+                <h2>Image & Controls</h2>
+                <div class="upload-area">
+                    <label for="imageUpload" class="upload-btn glassmorphism-light">Upload Image</label>
+                    <input type="file" id="imageUpload" accept="image/*">
+                </div>
+
+                <!-- Preview Area with Toggle Button -->
+                <div class="preview-wrapper">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" src="#" alt="Image Preview Area" style="display: none;" />
+                        <p id="previewPlaceholder">Upload an image to see the preview and apply filters.</p>
+                    </div>
+                    <!-- Before/After Toggle -->
+                    <button id="togglePreviewBtn" class="preview-toggle-btn glassmorphism-light"
+                        title="Hold to see original" style="display: none;">👁️</button>
+                </div>
+
+                <!-- Canvas for Processing (Hidden) -->
+                <canvas id="imageCanvas" style="display: none;"></canvas>
+
+                <!-- Download Button -->
+                <button id="downloadBtn" class="action-btn glassmorphism-light" style="display: none;">Download Filtered
+                    Image</button>
+            </div>
+
+
+            <!-- Preset Filters Section (Floating Panel) -->
+            <div id="filterSection" class="filter-section glassmorphism">
+                <h2>Preset Filters <button id="clearFiltersBtn" class="clear-btn glassmorphism-light"
+                        title="Remove all filters" style="display: none;">Clear All</button></h2>
+
+                <!-- Scrollable List Wrapper -->
+                <div id="filterListWrapper">
+                    <!-- Filter items (button + slider) generated here by JS -->
+                    <div id="filterList" class="filter-list">
+                        <p id="filterPlaceholder">Upload an image to see filters.</p>
+                    </div>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div id="activeFiltersInfo" class="active-filters-info" style="display: none;">
+                    <p>Active Filters: <span id="activeFilterNames">None</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>

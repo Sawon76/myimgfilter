@@ -1,0 +1,823 @@
+/* style.css - Final Version */
+
+/* ==========================================================================
+   CSS Variables for Theming
+   ========================================================================== */
+
+:root {
+    --bg-color: #f0f0f0;
+    --dot-color: #cccccc;
+    --text-color: #333;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: rgba(31, 38, 135, 0.15);
+    --glass-light-bg: rgba(255, 255, 255, 0.5);
+    --glass-light-border: rgba(255, 255, 255, 0.25);
+    --glass-light-shadow: rgba(0, 0, 0, 0.05);
+    --button-hover-bg: rgba(255, 255, 255, 0.7);
+    --button-active-bg: rgba(100, 150, 255, 0.4);
+    --button-active-border: rgba(100, 150, 255, 0.5);
+    --placeholder-color: #666;
+    --border-color: #ccc;
+    --scrollbar-track: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.4);
+    --header-color: #444;
+    --clear-btn-bg: rgba(255, 100, 100, 0.3);
+    --clear-btn-hover-bg: rgba(255, 100, 100, 0.5);
+    --slider-wrapper-bg: rgba(0, 0, 0, 0.04);
+
+    /* Layout Variables */
+    --filter-panel-width: 320px;
+    --filter-panel-gap: 30px;
+    --header-height: 60px;
+    --main-content-top-margin: 20px;
+    /* Gap below header */
+}
+
+/* ==========================================================================
+   Dark Mode Styles
+   ========================================================================== */
+
+body.dark-mode {
+    --bg-color: #2c2c2c;
+    --dot-color: #555555;
+    --text-color: #f1f1f1;
+    --glass-bg: rgba(50, 50, 50, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --glass-light-bg: rgba(70, 70, 70, 0.6);
+    --glass-light-border: rgba(255, 255, 255, 0.15);
+    --glass-light-shadow: rgba(0, 0, 0, 0.1);
+    --button-hover-bg: rgba(80, 80, 80, 0.8);
+    --button-active-bg: rgba(80, 130, 230, 0.5);
+    --button-active-border: rgba(80, 130, 230, 0.6);
+    --placeholder-color: #aaa;
+    --border-color: #666;
+    --scrollbar-track: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.5);
+    --header-color: #e0e0e0;
+    --clear-btn-bg: rgba(180, 80, 80, 0.4);
+    --clear-btn-hover-bg: rgba(200, 90, 90, 0.6);
+    --slider-wrapper-bg: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+    background-size: 15px 15px;
+    min-height: 100vh;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 95%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: var(--header-height);
+    /* Space for fixed header */
+    padding-bottom: 40px;
+}
+
+/* ==========================================================================
+   Header Styles
+   ========================================================================== */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px var(--filter-panel-gap);
+    /* --- Fixed Header --- */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 200;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--glass-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Smooth theme change */
+}
+
+h1 {
+    color: var(--header-color);
+    margin: 0;
+    font-size: 1.8em;
+    flex-grow: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theme-toggle-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-left: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.theme-toggle-btn:hover {
+    box-shadow: 0 4px 15px 0 var(--glass-light-shadow);
+}
+
+/* ==========================================================================
+   Main Layout
+   ========================================================================== */
+
+.main-content {
+    display: flex;
+    gap: var(--filter-panel-gap);
+    padding-right: calc(var(--filter-panel-width) + var(--filter-panel-gap));
+    position: relative;
+    margin-top: var(--main-content-top-margin);
+    /* Gap below fixed header */
+}
+
+/* ==========================================================================
+   Glassmorphism Effect
+   ========================================================================== */
+
+.glassmorphism {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glassmorphism-light {
+    background: var(--glass-light-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-light-border);
+    box-shadow: 0 4px 15px 0 var(--glass-light-shadow);
+    color: var(--text-color);
+}
+
+/* ==========================================================================
+   Image Section Styles (#imageSection)
+   ========================================================================== */
+
+.image-section {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-section h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--header-color);
+    font-size: 1.4em;
+}
+
+.upload-area {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+.upload-btn:hover {
+    background: var(--button-hover-bg);
+    box-shadow: 0 6px 20px 0 var(--glass-light-shadow);
+    transform: translateY(-1px);
+}
+
+#imageUpload {
+    display: none;
+}
+
+/* Preview Area */
+.preview-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+    /* Increased gap */
+    flex-grow: 1;
+    /* Allow wrapper to fill vertical space */
+    display: flex;
+    /* Make container inside fill */
+}
+
+.image-preview-container {
+    width: 100%;
+    border: 2px dashed var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    min-height: 350px;
+    position: relative;
+    /* For placeholder */
+}
+
+#imagePreview {
+    display: block;
+    max-width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    transition: filter 0.1s ease;
+    /* Faster transition for toggle */
+}
+
+#previewPlaceholder {
+    color: var(--placeholder-color);
+    text-align: center;
+    padding: 30px;
+    font-size: 1.1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Before/After Toggle Button (#togglePreviewBtn) */
+.preview-toggle-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.4em;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    /* Set by JS, but good default */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.preview-toggle-btn:hover {
+    background: var(--button-hover-bg);
+    box-shadow: 0 4px 15px 0 var(--glass-light-shadow);
+}
+
+.preview-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Download Button */
+.action-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 500;
+    margin-top: auto;
+    /* Push to bottom if space allows */
+    align-self: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.action-btn:hover {
+    background: var(--button-hover-bg);
+    box-shadow: 0 6px 20px 0 var(--glass-light-shadow);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   Floating Filter Panel Styles (#filterSection)
+   ========================================================================== */
+
+.filter-section {
+    /* --- Positioning --- */
+    position: fixed;
+    /* top: value; <-- Set by JavaScript */
+    right: var(--filter-panel-gap);
+    width: var(--filter-panel-width);
+    /* max-height: value; <-- Set by JavaScript */
+    z-index: 100;
+
+    /* --- Layout & Appearance --- */
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    /* Inherits glassmorphism styles */
+}
+
+.filter-section h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--header-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 1.3em;
+}
+/* style.css */
+
+
+/* Loading Spinner Styles */
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--glass-light-border);
+    border-top-color: var(--button-active-border);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+    z-index: 60;
+    /* Above preview image */
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Wrapper for Action Buttons */
+.action-buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    /* Space between buttons */
+    margin-top: 25px;
+    flex-wrap: wrap;
+    /* Allow wrapping if needed */
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Action Button Style (applies to AI and Download) */
+.action-btn {
+    padding: 10px 20px;
+    /* Adjusted padding */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    /* Adjusted font size */
+    font-weight: 500;
+    /* margin-top: 25px; <-- Removed, handled by wrapper */
+    /* align-self: center; <-- Removed, handled by wrapper */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    flex-grow: 1;
+    /* Allow buttons to grow */
+    max-width: 220px;
+    /* Limit button width */
+    text-align: center;
+}
+
+.action-btn:hover {
+    background: var(--button-hover-bg);
+    box-shadow: 0 6px 20px 0 var(--glass-light-shadow);
+    transform: translateY(-1px);
+}
+
+/* --- End Add/Modify Styles --- */
+
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+/* ... (Keep ALL previous media queries) ... */
+
+@media (max-width: 576px) {
+
+    /* ... other small screen styles ... */
+    .action-btn {
+        font-size: 0.9em;
+        padding: 10px 15px;
+        max-width: 180px;
+    }
+
+    .action-buttons-wrapper {
+        gap: 10px;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+    }
+}
+.clear-btn {
+    padding: 5px 12px;
+    font-size: 0.8em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--clear-btn-bg);
+    color: var(--text-color);
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.clear-btn:hover {
+    background-color: var(--clear-btn-hover-bg);
+}
+
+/* Scrollable Filter List Wrapper */
+#filterListWrapper {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 150px;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.filter-list {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+    padding-right: 10px;
+    /* Space for scrollbar */
+}
+
+/* Scrollbar Styling (Webkit) */
+.filter-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.filter-list::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+.filter-list::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+
+.filter-list::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Scrollbar Styling (Firefox) */
+.filter-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+
+#filterPlaceholder {
+    color: var(--placeholder-color);
+    text-align: center;
+    padding: 30px 15px;
+    font-size: 0.95em;
+    margin-top: 20px;
+}
+
+/* Filter Item Container (Button + Slider) */
+.filter-item-container {
+    margin-bottom: 5px;
+}
+
+/* Filter Button Styling */
+.filter-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, transform 0.1s ease, border-color 0.2s ease, border-radius 0.1s ease;
+    background: var(--glass-light-bg);
+    border: 1px solid var(--glass-light-border);
+    color: var(--text-color);
+}
+
+.filter-button:hover {
+    background: var(--button-hover-bg);
+    transform: scale(1.02);
+}
+
+.filter-button.active {
+    background: var(--button-active-bg);
+    font-weight: 500;
+    border: 1px solid var(--button-active-border);
+    border-bottom-left-radius: 0;
+    /* Flatten bottom when slider shown */
+    border-bottom-right-radius: 0;
+}
+
+.filter-button.active::after {
+    content: '✔';
+    color: var(--text-color);
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 1.1em;
+}
+
+/* Individual Slider Styles */
+.slider-control-wrapper {
+    display: none;
+    /* Hidden by default, shown by JS */
+    padding: 10px 15px;
+    background-color: var(--slider-wrapper-bg);
+    border: 1px solid var(--glass-light-border);
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-bottom: 8px;
+    /* Space below slider area */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-strength-slider {
+    width: calc(100% - 60px);
+    cursor: pointer;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+    /* Inherit custom range styles */
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--glass-light-border);
+    border-radius: 3px;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.filter-strength-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--button-active-bg);
+    border: 1px solid var(--button-active-border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-strength-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--button-active-bg);
+    border: 1px solid var(--button-active-border);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-strength-value {
+    display: inline-block;
+    min-width: 40px;
+    text-align: right;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 0.85em;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+/* Active Filters Info */
+.active-filters-info {
+    padding: 10px 15px;
+    margin-top: auto;
+    /* Push to bottom of filter panel */
+    font-size: 0.85em;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    color: var(--placeholder-color);
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+#activeFilterNames {
+    font-weight: 500;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+/* Medium screens - Adjust panel width and gaps */
+@media (max-width: 1200px) {
+    :root {
+        --filter-panel-width: 280px;
+        --filter-panel-gap: 20px;
+    }
+
+    .main-content {
+        padding-right: calc(var(--filter-panel-width) + var(--filter-panel-gap));
+    }
+
+    .filter-section {
+        /* Applies only when fixed */
+        width: var(--filter-panel-width);
+        right: var(--filter-panel-gap);
+    }
+
+    header {
+        padding: 15px var(--filter-panel-gap);
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+}
+
+
+/* Small screens (Tablets / Large Phones) - Stack layout */
+@media (max-width: 992px) {
+    .main-content {
+        flex-direction: column;
+        padding-right: 0;
+        gap: 25px;
+        margin-top: var(--main-content-top-margin);
+        /* Keep gap below header */
+    }
+
+    .image-section {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .filter-section {
+        /* Revert fixed positioning */
+        position: static;
+        width: 100%;
+        /* Use CSS max-height; JS will remove inline styles */
+        max-height: 50vh;
+        top: auto !important;
+        /* Ensure JS override is removed */
+        right: auto !important;
+        z-index: auto;
+        order: 2;
+        margin-bottom: 20px;
+    }
+
+    #imagePreview {
+        max-height: 50vh;
+    }
+
+    .filter-section h2 {
+        padding-bottom: 15px;
+    }
+
+    #filterListWrapper {
+        min-height: 200px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}
+
+/* Extra Small Screens (Phones) */
+@media (max-width: 576px) {
+    :root {
+        --header-height: 50px;
+        --main-content-top-margin: 15px;
+        /* Slightly smaller gap */
+    }
+
+    .container {
+        padding-top: var(--header-height);
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    .theme-toggle-btn {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
+
+    .glassmorphism {
+        padding: 15px;
+    }
+
+    .image-section h2,
+    .filter-section h2 {
+        font-size: 1.2em;
+    }
+
+    .upload-btn,
+    .action-btn {
+        font-size: 0.95em;
+        padding: 10px 20px;
+    }
+
+    .image-preview-container {
+        min-height: 250px;
+    }
+
+    #previewPlaceholder {
+        font-size: 1em;
+        padding: 20px;
+    }
+
+    .filter-section {
+        /* Applies only when stacked */
+        max-height: 45vh;
+        /* Slightly more height */
+    }
+
+    .filter-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    .active-filters-info {
+        font-size: 0.8em;
+        padding: 8px 12px;
+    }
+
+    .preview-toggle-btn {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+
+    .slider-control-wrapper {
+        padding: 8px 12px;
+    }
+
+    .filter-strength-slider {
+        width: calc(100% - 50px);
+    }
+
+    .filter-strength-value {
+        min-width: 35px;
+        font-size: 0.8em;
+    }
+}
